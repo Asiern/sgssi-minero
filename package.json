@@ -1,0 +1,17 @@
+{
+  "name": "sgssi-minero",
+  "version": "1.0.0",
+  "main": "main.ts",
+  "author": "Asiern <asiern.dev@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.6",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "crypto-js": "^4.1.1"
+  }
+}
