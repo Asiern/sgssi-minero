@@ -5,9 +5,6 @@ const filePath = process.argv[2];
 if (!filePath) throw new Error("No file path provided");
 
 const file = new File();
-file.read(filePath).then(() => {
-  console.log(file.getSHA256());
-});
 
 // A1
 file.read(filePath).then(() => {
@@ -71,4 +68,14 @@ file.read(filePath).then(() => {
   }
 
   console.log(longestSeq, longestSeqZeros);
+});
+
+// A3
+const f1 = new File();
+const f2 = new File();
+
+f1.read(process.argv[2]).then(() => {
+  f2.read(process.argv[3]).then(() => {
+    console.log(f2.verifyStart(f1) && f2.getSHA256().startsWith("0"));
+  });
 });

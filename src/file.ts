@@ -77,6 +77,13 @@ class File {
   appendHash(): File {
     return this.append(this.getSHA256());
   }
+
+  /**
+   * Verify that the start of both files is the same
+   */
+  verifyStart(file: File): boolean {
+    return this.data.startsWith(file.data);
+  }
 }
 
 export { File };
