@@ -22,6 +22,7 @@ class File {
         if (err) reject(err);
         this.path = path;
         this.data = data.toString();
+        this.hash = "";
         resolve();
       });
     });
@@ -37,18 +38,12 @@ class File {
    */
   getSHA256(): string {
     if (!this.data) throw new Error("File is empty");
-    if (this.hash) return this.hash;
 
     const hash = crypto.createHash("sha256");
     hash.update(this.data);
     const sha256sum = hash.digest("hex");
     this.hash = sha256sum;
     return sha256sum;
-  }
-
-  resetSHA256(): void {
-    this.hash = "";
-    this.getSHA256();
   }
 
   /**

@@ -8,10 +8,12 @@
     "build": "tsc"
   },
   "devDependencies": {
+    "@types/minimist": "^1.2.4",
     "@types/node": "^20.8.6",
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "crypto-js": "^4.1.1"
+    "crypto-js": "^4.1.1",
+    "minimist": "^1.2.8"
   }
 }
