@@ -24,7 +24,7 @@ function checkFiles(f1: File, f2: File): boolean {
     return false;
   }
 
-  // Check if secuence is valid
+  // Check if sequence is valid
   const sequenceNumber = parseInt(sequence, 16);
   if (isNaN(sequenceNumber)) {
     return false;
