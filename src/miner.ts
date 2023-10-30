@@ -1,6 +1,5 @@
-import { lstatSync, readdir, readdirSync } from "fs";
+import { lstatSync, readdirSync } from "fs";
 import { File } from "./file";
-import { parse, resolve } from "path";
 
 const ID = "16";
 
@@ -19,8 +18,13 @@ function checkFiles(f1: File, f2: File): boolean {
   }
 
   // Check if the second file ends with the correct sequence
-  const sequence = f2.data.split("\n").pop()?.split("\t")[0];
+  const sequence = f2.data.substring(f1.data.length).split("\t")[0];
   if (!sequence) {
+    return false;
+  }
+
+  // Check if the sequence has the correct length
+  if (sequence.length !== 8) {
     return false;
   }
 
