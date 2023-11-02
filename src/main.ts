@@ -10,7 +10,7 @@ import { lstatSync, opendir, opendirSync, readdirSync } from "fs";
 
 // Parse the arguments
 const args = minimist(process.argv.slice(2), {
-  string: ["f1", "f2", "time"],
+  string: ["f1", "f2", "time", "id"],
   boolean: ["mine", "verify", "verbose", "help"],
   alias: {
     mine: "m",
@@ -28,6 +28,7 @@ const verify = args.verify;
 const time = args.time;
 const verbose = args.verbose;
 const help = args.help || args.h;
+const id = args.id;
 
 if (help) {
   console.log("Usage: node main.js [options]");
@@ -54,6 +55,11 @@ if ((!mine && !verify) || (mine && verify)) {
   process.exit(1);
 }
 
+if (!id) {
+  console.log("Invalid arguments, id not specified");
+  process.exit(1);
+}
+
 const file1 = new File();
 let file2 = new File();
 
@@ -69,7 +75,7 @@ if (mine) {
     let max = { sequence: 0, zeros: 0, hash: "" };
 
     while (Date.now() < endTime) {
-      const result = mineSingle(file1, sequence, 100);
+      const result = mineSingle(file1, sequence, 100, id);
       if (result.zeros > max.zeros) {
         verbose &&
           console.log(
@@ -89,7 +95,7 @@ if (mine) {
       console.log(`Hash: ${max.hash}`);
 
       // Append the sequence to the file and write it
-      file2 = file1.append(generateSequence(max.sequence, 100));
+      file2 = file1.append(generateSequence(max.sequence, 100, id));
       file2.write(f2);
     } else console.log("No sequence mined");
   });

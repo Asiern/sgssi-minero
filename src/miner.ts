@@ -1,8 +1,6 @@
 import { lstatSync, readdirSync } from "fs";
 import { File } from "./file";
 
-const ID = "16";
-
 /**
  * Tomando como entrada dos ficheros de texto, obtenga como salida el resultado de comprobar estas dos condiciones:
  * El segundo de los dos ficheros de texto de entrada comienza exactamente por los mismos contenidos que el primero, seguido por una línea con las características especificadas para las actividades anteriores.
@@ -18,7 +16,7 @@ function checkFiles(f1: File, f2: File): boolean {
   }
 
   // Check if the second file ends with the correct sequence
-  const sequence = f2.data.substring(f1.data.length).split("\t")[0];
+  const sequence = f2.data.substring(f1.data.length).split("\t")[0].trim();
   if (!sequence) {
     return false;
   }
@@ -49,11 +47,15 @@ function checkFiles(f1: File, f2: File): boolean {
  * @param ammount Number of coins to mine
  * @returns String with the sequence and the number of coins to mine
  */
-function generateSequence(sequence: number, ammount: number): string {
+function generateSequence(
+  sequence: number,
+  ammount: number,
+  id: string
+): string {
   return `${sequence
     .toString(16)
     .toLowerCase()
-    .padStart(8, "0")}\t${ID}\t${ammount}`;
+    .padStart(8, "0")}\t${id}\t${ammount}`;
 }
 
 /**
@@ -79,16 +81,18 @@ function getZeros(hash: string): number {
  * @param file file to mine
  * @param sequence sequence to mine
  * @param ammount number of coins to mine
+ * @param id id of the miner
  * @returns number of zeros of the hash of the mined sequence
  */
 function mineSingle(
   file: File,
   sequence: number,
-  ammount: number
+  ammount: number,
+  id: string
 ): { sequence: number; zeros: number; hash: string } {
   try {
     // Create the sequence string
-    const s = generateSequence(sequence, ammount);
+    const s = generateSequence(sequence, ammount, id);
 
     // Append the sequence to the file
     const f = file.append(s);
@@ -110,19 +114,21 @@ function mineSingle(
  * @param end mining sequence end
  * @param ammount number of coins to mine
  * @param file file to mine
+ * @param id id of the miner
  * @returns the sequence and the number of zeros of the longest sequence
  */
 function mineRange(
   start: number,
   end: number,
   ammount: number,
-  file: File
+  file: File,
+  id: string
 ): { sequence: number; zeros: number; hash: string } {
   try {
     // Call mineSingle for each sequence in the range
     let max = { sequence: 0, zeros: 0, hash: "" };
     for (let i = start; i < end; i++) {
-      const r = mineSingle(file, i, ammount);
+      const r = mineSingle(file, i, ammount, id);
       if (r.zeros > max.zeros) max = r;
     }
     return max;
