@@ -43,6 +43,7 @@ El script proporciona los siguientes parámetros:
 | mine | Indica que se va a minar un bloque |
 |verbose | Indica que se va a mostrar información adicional |
 |time| Indica el tiempo máximo de ejecución del minado (en milisegundos)|
+|id|Indica el identificador del minero|
 
 Este comando mostrará la ayuda del programa con los parámetros que se pueden pasar al mismo.
 
@@ -61,5 +62,5 @@ bun build/main.js --f1 SGSSI-23.CB.03.txt --f2 ./SGSSI-23.S.6.2.CB.03.Candidatos
 
 ```
 # Minar bloque
-bun build/main.js --f1 SGSSI-23.CB.02.txt --f2 output.txt --mine
+bun build/main.js --f1 SGSSI-23.CB.02.txt --f2 output.txt --mine --id xxx
 ```
